@@ -21,7 +21,7 @@ const Image = ({ fileName, alt, style }) => {
 
   return (
     <>
-      <Img fluid={fluid} alt={alt} style={style} loading={'lazy'} fadeIn={false}/>
+      <Img fluid={fluid} alt={alt} style={style} loading={'eager'} fadeIn={false}/>
     </>
   )
 }
