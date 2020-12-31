@@ -6,24 +6,24 @@ import SEO from "../components/seo"
 
 import "./index.css"
 
-const idleImageFN = 'cat-idle.png'
-
 const motionImageFNArray = [
-  "cat-blink.png",
-  "cat-ear.png",
-  "cat-tail.png",
+  {"file":"cat-blink.png","alt":"cat blinks"},
+  {"file":"cat-ear.png","alt":"cat twitches ear"},
+  {"file":"cat-tail.png","alt":"cat swishes tail"}
 ]
 
 const disturbImageFNArray = [
-  "cat-idle.png",
-  "click-1.png",
-  "click-2.png",
-  "click-3.png",
-  "click-4.png",
+  {"file":"cat-idle.png","alt":"cat is peaceful"},
+  {"file":"click-1.png","alt":"cat is now amused"},
+  {"file":"click-2.png","alt":"cat is now disturbed"},
+  {"file":"click-3.png","alt":"cat is now mad"},
+  {"file":"click-4.png","alt":"cat is now angry"}
 ]
 
 export default () => {
-  const [imageFile, setImageFile] = useState(idleImageFN)
+  const [imageFile, setImageFile] = useState(disturbImageFNArray[0].file)
+  const [ariaText, setAriaText] = useState(disturbImageFNArray[0].alt)
+  const [ariaLive, setAriaLive] = useState('polite')
   const [disturbState, setDisturbState] = useState(0)
   const [timerCounter, setCounterTimer] = useState(0)
   
@@ -34,36 +34,42 @@ export default () => {
     }
     setCounterTimer(0)
   }
-
-  function recoverCat() {
-    if (disturbState > 0) {
-      let temp = disturbState - 1
-      setDisturbState(temp)
-    }
-    setCounterTimer(0)
-  }
-  
-  function idleCat() {
-    setImageFile(motionImageFNArray[Math.floor(Math.random()*motionImageFNArray.length)])
-    var idleTimer = setTimeout(() => {
-      setCounterTimer(0)
-    },500)
-    return () => clearTimeout(idleTimer);
-  }
-  
-  function catMotion() {
-    if (disturbState === 0) {
-      idleCat()
-    } else {
-      recoverCat()
-    }
-  }
   
   useEffect(() => {
+    function catMotion() {
+      if (disturbState === 0) {
+        idleCat()
+      } else {
+        recoverCat()
+      }
+    }
+    
+    function recoverCat() {
+      if (disturbState > 0) {
+        let temp = disturbState - 1
+        setDisturbState(temp)
+      }
+      setCounterTimer(0)
+    }
+
+    function idleCat() {
+      let randomId = Math.floor(Math.random()*motionImageFNArray.length)
+      setImageFile(motionImageFNArray[randomId].file)
+      setAriaText(motionImageFNArray[randomId].alt)
+      setAriaLive('polite')
+      var idleTimer = setTimeout(() => {
+        setCounterTimer(0)
+      },1000)
+      return () => clearTimeout(idleTimer);
+    }
+    
     function counter() {
       switch (timerCounter) {
         case 0:
-          setImageFile(disturbImageFNArray[disturbState])
+          console.log(disturbImageFNArray[disturbState].file)
+          setImageFile(disturbImageFNArray[disturbState].file)
+          setAriaText(disturbImageFNArray[disturbState].alt)
+          setAriaLive('assertive')
           setCounterTimer(1)
           break
         case 50:
@@ -75,21 +81,28 @@ export default () => {
     }    
     var timer = setTimeout(()=>{counter()}, 100)
     return () => clearTimeout(timer);
-  }, [timerCounter])
+  }, [timerCounter, disturbState])
 
   return (
     <Layout>
       <SEO title="Home" />
       <div className={'cat-image'}
-           onClick={disturbCat}>
-        {disturbImageFNArray.map(file => {
+           onClick={disturbCat}
+           onKeyPress={disturbCat}
+           tabIndex={0}
+           alt={ariaText}
+           aria-label={ariaText}
+           aria-live={ariaLive}
+           role={'button'}
+           >
+        {disturbImageFNArray.map(fN => {
           return (
-            <Image fileName={file} style={{display: imageFile === file ? 'inherit' : 'none'}} alt=""/>
+            <Image key={'img-' + fN.file} fileName={fN.file} style={{display: imageFile === fN.file ? 'inherit' : 'none'}} />
           )
         })}
-       {motionImageFNArray.map(file => {
+       {motionImageFNArray.map(fN => {
           return (
-            <Image fileName={file} style={{display: imageFile === file ? 'inherit' : 'none'}} alt=""/>
+            <Image key={'img-' + fN.file} fileName={fN.file} style={{display: imageFile === fN.file ? 'inherit' : 'none'}}/>
           )
         })}
       </div>
