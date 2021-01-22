@@ -39,9 +39,10 @@ const Layout = ({ children }) => {
           bottom: '11px',
           right: '17px',
         }}>
-          © {new Date().getFullYear()}, Built with
-          {` `}
+          ©{new Date().getFullYear()} <a href="https://github.com/geoct826/dont-disturb-the-cat" target="_blank">geoct826</a> 
+          , built w/
           <a href="https://www.gatsbyjs.com">Gatsby</a>
+          
         </footer>
       </div>
     </>
