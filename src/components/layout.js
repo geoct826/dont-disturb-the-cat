@@ -39,9 +39,9 @@ const Layout = ({ children }) => {
           bottom: '11px',
           right: '17px',
         }}>
-          ©{new Date().getFullYear()} <a href="https://github.com/geoct826/dont-disturb-the-cat" target="_blank">geoct826</a> 
+          ©{new Date().getFullYear()} <a href="https://github.com/geoct826/dont-disturb-the-cat" target="_blank" rel="noreferrer">geoct826</a> 
           , built w/
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
+          <a href="https://www.gatsbyjs.com" target="_blank" rel="noreferrer">Gatsby</a>
           
         </footer>
       </div>
