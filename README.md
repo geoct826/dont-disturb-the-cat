@@ -4,7 +4,7 @@ Don't Distrub the Cat was a project built in response to the Gatsby Silly Site C
 
 ## Motivation
 
-I've been using Gatsby for a few month now to complete a redesign of LiquidChurch.com [https://liquidchurch.com] and have been amazed at site performance. Wanting to engage my middle school child in design, I've given her the challenge to come up with a Silly Site idea and this is the result.
+I've been using Gatsby for a few month now to complete a redesign of [LiquidChurch.com](https://liquidchurch.com) and have been amazed at site performance. Wanting to engage my middle school child in design, I've given her the challenge to come up with a Silly Site idea and this is the result.
 
 ## Development Considerations
 
